@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import dominio.Bibliotecario;
 import dominio.Libro;
+import dominio.regla.ReglamentoPrestamo;
 import dominio.repositorio.RepositorioLibro;
 import dominio.repositorio.RepositorioPrestamo;
 import testdatabuilder.LibroTestDataBuilder;
@@ -25,10 +26,11 @@ public class BibliotecarioTest {
 		
 		RepositorioPrestamo repositorioPrestamo = mock(RepositorioPrestamo.class);
 		RepositorioLibro repositorioLibro = mock(RepositorioLibro.class);
+		ReglamentoPrestamo reglamentoPrestamo = mock(ReglamentoPrestamo.class);
 		
 		when(repositorioPrestamo.obtenerLibroPrestadoPorIsbn(libro.getIsbn())).thenReturn(libro);
 		
-		Bibliotecario bibliotecario = new Bibliotecario(repositorioLibro, repositorioPrestamo);
+		Bibliotecario bibliotecario = new Bibliotecario(repositorioLibro, repositorioPrestamo, reglamentoPrestamo);
 		
 		// act 
 		boolean esPrestado =  bibliotecario.esPrestado(libro.getIsbn());
@@ -47,10 +49,11 @@ public class BibliotecarioTest {
 		
 		RepositorioPrestamo repositorioPrestamo = mock(RepositorioPrestamo.class);
 		RepositorioLibro repositorioLibro = mock(RepositorioLibro.class);
+		ReglamentoPrestamo reglamentoPrestamo = mock(ReglamentoPrestamo.class);
 		
 		when(repositorioPrestamo.obtenerLibroPrestadoPorIsbn(libro.getIsbn())).thenReturn(null);
 		
-		Bibliotecario bibliotecario = new Bibliotecario(repositorioLibro, repositorioPrestamo);
+		Bibliotecario bibliotecario = new Bibliotecario(repositorioLibro, repositorioPrestamo, reglamentoPrestamo);
 		
 		// act 
 		boolean esPrestado =  bibliotecario.esPrestado(libro.getIsbn());

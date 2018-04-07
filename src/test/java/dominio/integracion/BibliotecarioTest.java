@@ -9,7 +9,9 @@ import org.junit.Test;
 
 import dominio.Bibliotecario;
 import dominio.Libro;
+import dominio.ReglaPrestamoPorQuinceDiasSumaIsbn;
 import dominio.excepcion.PrestamoException;
+import dominio.regla.ReglamentoPrestamo;
 import dominio.repositorio.RepositorioLibro;
 import dominio.repositorio.RepositorioPrestamo;
 import persistencia.sistema.SistemaDePersistencia;
@@ -18,11 +20,13 @@ import testdatabuilder.LibroTestDataBuilder;
 public class BibliotecarioTest {
 
 	private static final String CRONICA_DE_UNA_MUERTA_ANUNCIADA = "Cronica de una muerta anunciada";
+	private static final String NOMBRE_USUARIO = "Darwin";
 	
 	private SistemaDePersistencia sistemaPersistencia;
 	
 	private RepositorioLibro repositorioLibros;
 	private RepositorioPrestamo repositorioPrestamo;
+	private ReglamentoPrestamo reglamentoPrestamo;
 
 	@Before
 	public void setUp() {
@@ -31,6 +35,7 @@ public class BibliotecarioTest {
 		
 		repositorioLibros = sistemaPersistencia.obtenerRepositorioLibros();
 		repositorioPrestamo = sistemaPersistencia.obtenerRepositorioPrestamos();
+		reglamentoPrestamo = new ReglaPrestamoPorQuinceDiasSumaIsbn();
 		
 		sistemaPersistencia.iniciar();
 	}
@@ -47,10 +52,10 @@ public class BibliotecarioTest {
 		// arrange
 		Libro libro = new LibroTestDataBuilder().conTitulo(CRONICA_DE_UNA_MUERTA_ANUNCIADA).build();
 		repositorioLibros.agregar(libro);
-		Bibliotecario blibliotecario = new Bibliotecario(repositorioLibros, repositorioPrestamo);
+		Bibliotecario blibliotecario = new Bibliotecario(repositorioLibros, repositorioPrestamo, reglamentoPrestamo);
 
 		// act
-		blibliotecario.prestar(libro.getIsbn());
+		blibliotecario.prestar(libro.getIsbn(), NOMBRE_USUARIO);
 
 		// assert
 		Assert.assertTrue(blibliotecario.esPrestado(libro.getIsbn()));
@@ -66,13 +71,13 @@ public class BibliotecarioTest {
 		
 		repositorioLibros.agregar(libro);
 		
-		Bibliotecario blibliotecario = new Bibliotecario(repositorioLibros, repositorioPrestamo);
+		Bibliotecario blibliotecario = new Bibliotecario(repositorioLibros, repositorioPrestamo, reglamentoPrestamo);
 
 		// act
-		blibliotecario.prestar(libro.getIsbn());
+		blibliotecario.prestar(libro.getIsbn(), NOMBRE_USUARIO);
 		try {
 			
-			blibliotecario.prestar(libro.getIsbn());
+			blibliotecario.prestar(libro.getIsbn(), NOMBRE_USUARIO);
 			fail();
 			
 		} catch (PrestamoException e) {
