@@ -2,13 +2,13 @@ package dominio;
 
 public class Libro {
 
-	private String isbn;
+	private StringBuffer isbn;
 	private String titulo;
 	private int anio;
 
 	public Libro(String isbn, String titulo, int anio) {
 
-		this.isbn = isbn;
+		this.isbn = new StringBuffer(isbn);
 		this.titulo = titulo;
 		this.anio = anio;
 	}
@@ -22,7 +22,14 @@ public class Libro {
 	}
 
 	public String getIsbn() {
-		return isbn;
+		return isbn.toString();
 	}
+	
+	public boolean isPalindromo() {
+		
+		return this.isbn.toString().equals(this.isbn.reverse().toString());
+	}
+	
+	
 
 }
