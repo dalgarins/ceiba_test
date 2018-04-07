@@ -1,6 +1,8 @@
 package dominio;
 
+import dominio.excepcion.LibroNoEncontradoException;
 import dominio.excepcion.PrestamoException;
+import dominio.excepcion.ReglaPrestamoException;
 import dominio.regla.ReglamentoPrestamo;
 import dominio.repositorio.RepositorioLibro;
 import dominio.repositorio.RepositorioPrestamo;
@@ -41,10 +43,10 @@ public class Bibliotecario {
 		Libro libroParaPrestar = repositorioLibro.obtenerPorIsbn(isbn);
 		
 		if (libroParaPrestar == null) {
-			throw new PrestamoException(EL_LIBRO_NO_EXISTE_EN_LA_BIBLIOTECA);
+			throw new LibroNoEncontradoException(EL_LIBRO_NO_EXISTE_EN_LA_BIBLIOTECA);
 		}
 		if (libroParaPrestar.esPalindromo()) {
-			throw new PrestamoException(EL_LIBRO_SOLO_SE_PUEDE_USAR_EN_LA_BIBLIOTECA);
+			throw new ReglaPrestamoException(EL_LIBRO_SOLO_SE_PUEDE_USAR_EN_LA_BIBLIOTECA);
 		}
 		return libroParaPrestar;
 	}

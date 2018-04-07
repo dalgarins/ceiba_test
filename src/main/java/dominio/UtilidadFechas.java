@@ -19,11 +19,10 @@ public class UtilidadFechas {
 	    }
 
 	    LocalDate fechaIterador = fechaSolicitud;
-	    int diasAgregados = 0;
+	    int diasAgregados = 1;
 	    while (diasAgregados < cantidadMaxima) {
 	    	fechaIterador = fechaIterador.plusDays(1);
-	        if (!(fechaIterador.getDayOfWeek() == DayOfWeek.SATURDAY ||
-	        		fechaIterador.getDayOfWeek() == DayOfWeek.SUNDAY)) {
+	        if (!(fechaIterador.getDayOfWeek() == DayOfWeek.SUNDAY)) {
 	            ++diasAgregados;
 	        }
 	    }

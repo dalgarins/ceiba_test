@@ -60,6 +60,7 @@ public class BibliotecarioTest {
 		// assert
 		Assert.assertTrue(blibliotecario.esPrestado(libro.getIsbn()));
 		Assert.assertNotNull(repositorioPrestamo.obtenerLibroPrestadoPorIsbn(libro.getIsbn()));
+		Assert.assertNull(repositorioPrestamo.obtener(libro.getIsbn()).getFechaEntregaMaxima());
 
 	}
 
